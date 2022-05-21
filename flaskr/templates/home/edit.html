@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Edit "{{ tasks['title'] }}"{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">title</label>
+      <input name="title" type="text" class="form-control" id="exampleFormControlInput1" value="{{ request.form['title'] or tasks['title'] }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label">詳細</label>
+      <textarea name="body" class="form-control" id="exampleFormControlTextarea1" rows="3" required>{{ request.form['body'] or tasks['body'] }}</textarea>
+    </div>
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">修正</button>
+    </div>
+  </form>
+  <hr>
+  <form action="{{ url_for('home.delete', id=tasks['id']) }}" method="post">
+    <button class="btn btn-danger" type="submit">削除</button>
+  </form>
+{% endblock %}
