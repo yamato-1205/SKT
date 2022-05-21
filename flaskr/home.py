@@ -27,36 +27,30 @@ def index():
 @login_required
 def create():
     if request.method == 'POST':
+        db = get_db()
         groupe_name = request.form['groupe_name']
         groupe_explain = request.form['groupe_explain']
         # TODO:グループコードがかぶらないようにする
         groupe_code = str(random.randint(0, 10000))
-        error = None
 
-        if not groupe_name:
-            error = 'Title is required.'
+        user_id = session.get('user_id')
 
-        if error is not None:
-            flash(error)
-        else:
-            db = get_db()
-            user_id = session.get('user_id')
-            db.execute(
-                'INSERT INTO groupe (groupe_name, groupe_explain, groupe_code) VALUES (?, ?, ?);',(groupe_name, groupe_explain, groupe_code)
-            )
-            db.commit()
+        db.execute(
+            'INSERT INTO groupe (groupe_name, groupe_explain, groupe_code) VALUES (?, ?, ?);',(groupe_name, groupe_explain, groupe_code)
+        )
+        db.commit()
 
-            # 先ほど作成したグループのidを取得
-            groupe_id = db.execute(
-                'SELECT id FROM groupe WHERE groupe_code = ?',(groupe_code,)
-            ).fetchone()
+        # 先ほど作成したグループのidを取得
+        groupe_id = db.execute(
+            'SELECT id FROM groupe WHERE groupe_code = ?',(groupe_code,)
+        ).fetchone()
 
-            # 自分をそのグループに招待
-            db.execute(
-                'INSERT INTO conection (user_id, groupe_id) VALUES (?, ?);',(user_id, int(groupe_id[0])),
-            )
-            db.commit()
-            return redirect(url_for('home.index'))
+        # 自分をそのグループに招待
+        db.execute(
+            'INSERT INTO conection (user_id, groupe_id) VALUES (?, ?);',(user_id, int(groupe_id[0])),
+        )
+        db.commit()
+        return redirect(url_for('home.index'))
 
     return render_template('home/create.html')
 
@@ -92,25 +86,8 @@ def join():
 
     return render_template('home/join.html')
 
-# def get_post(id, check_author=True):
-#     post = get_db().execute(
-#         'SELECT p.id, title, body, created, author_id, username'
-#         ' FROM post p JOIN user u ON p.author_id = u.id'
-#         ' WHERE p.id = ?',
-#         (id,)
-#     ).fetchone()
-
-#     if post is None:
-#         abort(404, f"Post id {id} doesn't exist.")
-
-#     if check_author and post['author_id'] != g.user['id']:
-#         abort(403)
-
-#     return post
-
-
 # タスクを表示させる
-@bp.route('/task/<int:id>', methods=('GET', 'POST'))
+@bp.route('/task/<int:id>', methods=('POST','GET'))
 @login_required
 def task(id):
     # if request.method == 'POST':
@@ -118,25 +95,6 @@ def task(id):
     tasks = db.execute(
         'SELECT * FROM task WHERE groupe_id = ?',(id,)
     ).fetchall()
-
-        # title = request.form['title']
-        # body = request.form['body']
-        # error = None
-
-        # if not title:
-        #     error = 'Title is required.'
-
-        # if error is not None:
-        #     flash(error)
-        # else:
-        #     db = get_db()
-        #     db.execute(
-        #         'UPDATE post SET title = ?, body = ?'
-        #         ' WHERE id = ?',
-        #         (title, body, id)
-        #     )
-        #     db.commit()
-        #     return redirect(url_for('home.index'))
 
     return render_template('home/task.html', id = id, tasks=tasks)
 
@@ -168,12 +126,33 @@ def add(id):
 
     return render_template('home/add.html', id = id)
 
+# タスクの修正
+@bp.route('/edit/<int:id>', methods=('GET', 'POST'))
+@login_required
+def edit(id):
+    db = get_db()
+
+    if request.method == 'POST':
+        title = request.form['title']
+        body = request.form['body']
+        error = None
+
+        db.execute(
+            'UPDATE task SET title = ?, body = ? WHERE id = ?',(title, body, id)
+        )
+        db.commit()
+        return redirect(url_for('home.index'))
+    else:
+        tasks = db.execute(
+            'SELECT * FROM task WHERE id = ?',(id,)
+        ).fetchone()
+
+    return render_template('home/edit.html', tasks=tasks)
 
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(id):
-    get_post(id)
     db = get_db()
-    db.execute('DELETE FROM post WHERE id = ?', (id,))
+    db.execute('DELETE FROM task WHERE id = ?', (id,))
     db.commit()
     return redirect(url_for('home.index'))
