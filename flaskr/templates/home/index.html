@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}HOME{% endblock %}</h1>
+  <h1>make groupe</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('home.create') }}">New</a>
+  {% endif %}
+  <h1>join groupe</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('home.join') }}">join</a>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+  {% for post in posts %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>{{ post['groupe_name'] }}</h1>
+        </div>
+      </header>
+    </article>
+  {% endfor %}
+{% endblock %}
