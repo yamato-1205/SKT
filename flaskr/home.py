@@ -28,6 +28,7 @@ def index():
 def create():
     if request.method == 'POST':
         groupe_name = request.form['groupe_name']
+        groupe_explain = request.form['groupe_explain']
         # TODO:グループコードがかぶらないようにする
         groupe_code = str(random.randint(0, 10000))
         error = None
@@ -41,7 +42,7 @@ def create():
             db = get_db()
             user_id = session.get('user_id')
             db.execute(
-                'INSERT INTO groupe (groupe_name, groupe_code) VALUES (?, ?);',(groupe_name, groupe_code)
+                'INSERT INTO groupe (groupe_name, groupe_explain, groupe_code) VALUES (?, ?, ?);',(groupe_name, groupe_explain, groupe_code)
             )
             db.commit()
 

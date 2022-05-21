@@ -2,29 +2,23 @@
 
 {% block header %}
   <h1>{% block title %}task{% endblock %}</h1>
-  <h1>make groupe</h1>
-  {% if g.user %}
-    <a class="action" href="{{ url_for('home.create') }}">New</a>
-  {% endif %}
-  <h1>join groupe</h1>
-  {% if g.user %}
-    <a class="action" href="{{ url_for('home.join') }}">join</a>
-  {% endif %}
-  <h1>add task</h1>
-  {% if g.user %}
-    <a class="action" href="{{ url_for('home.add', id = id) }}">add</a>
-  {% endif %}
 {% endblock %}
 
 
 {% block content %}
+    <div class="d-grid gap-2">
+        <a href="{{ url_for('home.add', id = id) }}"><button class="btn btn-primary" type="button" >タスクを追加する</button></a>
+    </div>
   {% for task in tasks %}
-    <article class="post">
-      <header>
-        <div>
-          <h1>{{ task['title'] }}</h1>
+    <div class="card">
+        <div class="card-header">
+            {{ task['title'] }}
         </div>
-      </header>
-    </article>
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
+            <p>{{ task['body'] }}</p>
+          </blockquote>
+        </div>
+      </div>
   {% endfor %}
 {% endblock %}

@@ -1,13 +1,21 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}New Post{% endblock %}</h1>
+  <h1>{% block title %}make groupe{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
   <form method="post">
-    <label for="groupe_name">groupe_name</label>
-    <input name="groupe_name" id="groupe_name" required>
-    <input type="submit" value="Save">
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">groupe_name</label>
+      <input name="groupe_name" type="text" class="form-control" id="exampleFormControlInput1" placeholder="グループ名" required>
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label">groupe_explain</label>
+      <textarea name="groupe_explain" class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
+    </div>
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">作成</button>
+    </div>
   </form>
 {% endblock %}
