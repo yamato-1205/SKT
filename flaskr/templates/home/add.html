@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}add task{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">title</label>
+      <input name="title" type="text" class="form-control" id="exampleFormControlInput1" placeholder="タスク名" required>
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label">詳細</label>
+      <textarea name="body" class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
+    </div>
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">追加</button>
+    </div>
+  </form>
+{% endblock %}

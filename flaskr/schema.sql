@@ -12,6 +12,7 @@ CREATE TABLE user (
 CREATE TABLE groupe (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     groupe_name TEXT NOT NULL,
+    groupe_explain TEXT NOT NULL,
     groupe_code TEXT NOT NULL
 );
 
@@ -33,7 +34,7 @@ CREATE TABLE conection (
 );
 
 INSERT INTO user (username, password) VALUES ('yamato', '1015');
-INSERT INTO groupe (groupe_name, groupe_code) VALUES ('NMB', '1');
-INSERT INTO groupe (groupe_name, groupe_code) VALUES ('ベリーグッドマン', '3');
+INSERT INTO groupe (groupe_name, groupe_explain, groupe_code) VALUES ('NMB', '4月3日〜4月5日', '1');
+INSERT INTO groupe (groupe_name, groupe_explain, groupe_code) VALUES ('ベリーグッドマン', '私とあいつの最強計画', '3');
 INSERT INTO task (groupe_id, title, body) VALUES (1, '柵運ぶ', '100本');
 INSERT INTO conection (user_id, groupe_id) VALUES (1, 1);
