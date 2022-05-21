@@ -17,7 +17,7 @@ def index():
     db = get_db()
 
     posts = db.execute(
-        'SELECT groupe_name FROM groupe WHERE id IN (SELECT groupe_id FROM conection WHERE user_id = ?)',(session.get('user_id'),)
+        'SELECT * FROM groupe WHERE id IN (SELECT groupe_id FROM conection WHERE user_id = ?)',(session.get('user_id'),)
     ).fetchall()
 
     return render_template('home/index.html', posts=posts)
@@ -84,34 +84,65 @@ def join():
         else:
             # 自分をそのグループに招待
             db.execute(
-                'INSERT INTO conection (user_id, groupe_id) VALUES (?, ?);',(session.get('user_id'), int(groupe_id[0])),
+                'INSERT INTO conection (user_id, groupe_id) VALUES (?, ?);',(session.get('user_id'), int(groupe_id[0]))
             )
             db.commit()
             return redirect(url_for('home.index'))
 
     return render_template('home/join.html')
 
-def get_post(id, check_author=True):
-    post = get_db().execute(
-        'SELECT p.id, title, body, created, author_id, username'
-        ' FROM post p JOIN user u ON p.author_id = u.id'
-        ' WHERE p.id = ?',
-        (id,)
-    ).fetchone()
+# def get_post(id, check_author=True):
+#     post = get_db().execute(
+#         'SELECT p.id, title, body, created, author_id, username'
+#         ' FROM post p JOIN user u ON p.author_id = u.id'
+#         ' WHERE p.id = ?',
+#         (id,)
+#     ).fetchone()
 
-    if post is None:
-        abort(404, f"Post id {id} doesn't exist.")
+#     if post is None:
+#         abort(404, f"Post id {id} doesn't exist.")
 
-    if check_author and post['author_id'] != g.user['id']:
-        abort(403)
+#     if check_author and post['author_id'] != g.user['id']:
+#         abort(403)
 
-    return post
+#     return post
 
-@bp.route('/<int:id>/update', methods=('GET', 'POST'))
+
+# タスクを表示させる
+@bp.route('/task/<int:id>', methods=('GET', 'POST'))
 @login_required
-def update(id):
-    post = get_post(id)
+def task(id):
+    # if request.method == 'POST':
+    db = get_db()
+    tasks = db.execute(
+        'SELECT * FROM task WHERE groupe_id = ?',(id,)
+    ).fetchall()
 
+        # title = request.form['title']
+        # body = request.form['body']
+        # error = None
+
+        # if not title:
+        #     error = 'Title is required.'
+
+        # if error is not None:
+        #     flash(error)
+        # else:
+        #     db = get_db()
+        #     db.execute(
+        #         'UPDATE post SET title = ?, body = ?'
+        #         ' WHERE id = ?',
+        #         (title, body, id)
+        #     )
+        #     db.commit()
+        #     return redirect(url_for('home.index'))
+
+    return render_template('home/task.html', id = id, tasks=tasks)
+
+# タスクを追加する
+@bp.route('/add/<int:id>', methods=('GET', 'POST'))
+@login_required
+def add(id):
     if request.method == 'POST':
         title = request.form['title']
         body = request.form['body']
@@ -120,19 +151,22 @@ def update(id):
         if not title:
             error = 'Title is required.'
 
+        if not body:
+            error = 'body is required.'
+
         if error is not None:
             flash(error)
         else:
             db = get_db()
             db.execute(
-                'UPDATE post SET title = ?, body = ?'
-                ' WHERE id = ?',
-                (title, body, id)
+                'INSERT INTO task (groupe_id, title, body) VALUES (?, ?, ?)',(id, title, body)
             )
             db.commit()
-            return redirect(url_for('home.index'))
 
-    return render_template('home/update.html', post=post)
+            return redirect(url_for('home.task', id = id))
+
+    return render_template('home/add.html', id = id)
+
 
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required

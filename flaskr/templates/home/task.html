@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}HOME{% endblock %}</h1>
+  <h1>{% block title %}task{% endblock %}</h1>
   <h1>make groupe</h1>
   {% if g.user %}
     <a class="action" href="{{ url_for('home.create') }}">New</a>
@@ -10,15 +10,19 @@
   {% if g.user %}
     <a class="action" href="{{ url_for('home.join') }}">join</a>
   {% endif %}
+  <h1>add task</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('home.add', id = id) }}">add</a>
+  {% endif %}
 {% endblock %}
 
 
 {% block content %}
-  {% for post in posts %}
+  {% for task in tasks %}
     <article class="post">
       <header>
         <div>
-          <h1><a class="action" href="{{ url_for('home.task', id=post['id']) }}">{{ post['groupe_name'] }}</a></h1>
+          <h1>{{ task['title'] }}</h1>
         </div>
       </header>
     </article>

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}add task{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="title">title</label>
+    <input name="title" id="title" required>
+    <label for="body">body</label>
+    <input type="text" name="body" id="body" required>
+    <input type="submit" value="Save">
+  </form>
+{% endblock %}
