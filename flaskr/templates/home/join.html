@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Join groupe{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="groupe_code">groupe_code</label>
+    <input name="groupe_code" id="groupe_code" required>
+    <input type="submit" value="Save">
+  </form>
+{% endblock %}
