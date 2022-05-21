@@ -12,17 +12,17 @@
   {% for task in tasks %}
     {% if task.state == 0 %}
       <div class="card text-white bg-primary my-2">
-        <div class="card-header">
+        <div class="card-header fs-3">
             {{ task['title'] }}
         </div>
-        <div class="card-body ">
+        <div class="card-body">
           <blockquote class="blockquote mb-3">
             <p>{{ task['body'] }}</p>
           </blockquote>
           <p>実行前</p>
     {% elif task.state == 1 %}
       <div class="card text-white bg-secondary my-2">
-        <div class="card-header">
+        <div class="card-header fs-3">
             {{ task['title'] }}
         </div>
         <div class="card-body ">
@@ -32,7 +32,7 @@
           <p>実行中（{{ task['username'] }}）</p>
     {% elif task.state == 2 %}
       <div class="card text-white bg-success my-2">
-        <div class="card-header">
+        <div class="card-header fs-3">
             {{ task['title'] }}
         </div>
         <div class="card-body ">
