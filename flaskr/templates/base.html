@@ -21,7 +21,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     {% if g.user %}
-      <div class="navbar-brand"><a class="fs-1 text-decoration-none text-secondary me-4" href="{{ url_for('home.index') }}">タスクル</a>user:{{ g.user['username'] }}</div>
+      <div class="navbar-brand"><a class="fs-1 text-decoration-none text-secondary fw-bold me-4" href="{{ url_for('home.index') }}">タスクル</a>user:{{ g.user['username'] }}</div>
     {% else %}
       <div class="navbar-brand"><a class="fs-1 text-decoration-none text-secondary" href="{{ url_for('home.index') }}">タスクル</a></div>
     {% endif %}

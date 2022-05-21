@@ -93,7 +93,7 @@ def task(id):
     # if request.method == 'POST':
     db = get_db()
     tasks = db.execute(
-        'SELECT * FROM task WHERE groupe_id = ?',(id,)
+        'SELECT * FROM task WHERE groupe_id = ? ORDER BY state ASC',(id,)
     ).fetchall()
 
     return render_template('home/task.html', id = id, tasks=tasks)
@@ -135,12 +135,20 @@ def edit(id):
     if request.method == 'POST':
         title = request.form['title']
         body = request.form['body']
+        state = request.form['state']
         error = None
 
-        db.execute(
-            'UPDATE task SET title = ?, body = ? WHERE id = ?',(title, body, id)
-        )
-        db.commit()
+        if state == 0:
+            db.execute(
+                'UPDATE task SET title = ?, body = ?, state = ? WHERE id = ?',(title, body, state, id)
+            )
+            db.commit()
+        else:
+            db.execute(
+                'UPDATE task SET title = ?, body = ?, state = ?, username = ? WHERE id = ?',(title, body, state, session.get('user_name'), id)
+            )
+            db.commit()
+
         return redirect(url_for('home.index'))
     else:
         tasks = db.execute(

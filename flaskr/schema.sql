@@ -22,6 +22,8 @@ CREATE TABLE task (
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     title TEXT NOT NULL,
     body TEXT NOT NULL,
+    state INTEGER NOT NULL DEFAULT (0),
+    username TEXT,
     FOREIGN KEY (groupe_id) REFERENCES groupe (id)
 );
 

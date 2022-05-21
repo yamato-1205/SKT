@@ -6,17 +6,40 @@
 
 {% block content %}
   <form method="post">
+
     <div class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">title</label>
       <input name="title" type="text" class="form-control" id="exampleFormControlInput1" value="{{ request.form['title'] or tasks['title'] }}" required>
     </div>
+
     <div class="mb-3">
       <label for="exampleFormControlTextarea1" class="form-label">詳細</label>
       <textarea name="body" class="form-control" id="exampleFormControlTextarea1" rows="3" required>{{ request.form['body'] or tasks['body'] }}</textarea>
     </div>
+
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="state" value="0" id="flexRadioDefault1" checked>
+      <label class="form-check-label" for="flexRadioDefault1">
+        実行前
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="state" value="1" id="flexRadioDefault2">
+      <label class="form-check-label" for="flexRadioDefault2">
+        実行中
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="state" value="2" id="flexRadioDefault3">
+      <label class="form-check-label" for="flexRadioDefault3">
+        完了
+      </label>
+    </div>
+
     <div class="col-12">
       <button type="submit" class="btn btn-primary">修正</button>
     </div>
+
   </form>
   <hr>
   <form action="{{ url_for('home.delete', id=tasks['id']) }}" method="post">

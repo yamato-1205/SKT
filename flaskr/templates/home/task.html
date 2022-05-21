@@ -10,16 +10,39 @@
         <a href="{{ url_for('home.add', id = id) }}"><button class="btn btn-primary" type="button" >タスクを追加する</button></a>
     </div>
   {% for task in tasks %}
-    <div class="card my-2">
+    {% if task.state == 0 %}
+      <div class="card text-white bg-primary my-2">
         <div class="card-header">
             {{ task['title'] }}
         </div>
-        <div class="card-body">
-          <blockquote class="blockquote mb-0">
+        <div class="card-body ">
+          <blockquote class="blockquote mb-3">
             <p>{{ task['body'] }}</p>
           </blockquote>
+          <p>実行前</p>
+    {% elif task.state == 1 %}
+      <div class="card text-white bg-secondary my-2">
+        <div class="card-header">
+            {{ task['title'] }}
         </div>
-        <a class="btn btn-primary" href="{{ url_for('home.edit', id=task['id']) }}">修正</a>
+        <div class="card-body ">
+          <blockquote class="blockquote mb-3">
+            <p>{{ task['body'] }}</p>
+          </blockquote>
+          <p>実行中（{{ task['username'] }}）</p>
+    {% elif task.state == 2 %}
+      <div class="card text-white bg-success my-2">
+        <div class="card-header">
+            {{ task['title'] }}
+        </div>
+        <div class="card-body ">
+          <blockquote class="blockquote mb-3">
+            <p>{{ task['body'] }}</p>
+          </blockquote>
+          <p>完了（{{ task['username'] }}）</p>
+    {% endif %}
+        </div>
+        <a class="btn btn-info" href="{{ url_for('home.edit', id=task['id']) }}">修正</a>
       </div>
   {% endfor %}
 {% endblock %}
