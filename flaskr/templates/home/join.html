@@ -1,16 +1,20 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Join groupe{% endblock %}</h1>
+  <div class="d-flex justify-content-start align-items-center">
+    <h1>{% block title %}グループ参加{% endblock %}</h1>
+  </div>
 {% endblock %}
 
 {% block content %}
-  <form method="post">
-    <div class="mb-3">
-      <label for="exampleFormControlInput1" class="form-label">groupe_code</label>
-      <input name="groupe_code" type="text" class="form-control" id="exampleFormControlInput1" placeholder="グループコード" required>
+  <form method="post" class="py-3">
+    <div class="row mb-3">
+      <label for="inputCode" class="col-sm-2 col-form-label">グループコード</label>
+      <div class="col-sm-10">
+        <input name="groupe_code" type="text" class="form-control" id="inputCode" required>
+      </div>
     </div>
-    <div class="col-12">
+    <div class="d-grid gap-2">
       <button type="submit" class="btn btn-primary">参加</button>
     </div>
   </form>

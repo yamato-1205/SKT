@@ -7,39 +7,39 @@
 <!-- css -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="nav_head navbar navbar-expand-lg px-3">
   <div class="container-fluid">
     {% if g.user %}
-      <div class="navbar-brand"><a class="fs-1 text-decoration-none text-secondary fw-bold me-4" href="{{ url_for('home.index') }}">タスクル</a>user:{{ g.user['username'] }}</div>
+      <div class="navbar-brand"><a class="fs-1 text-decoration-none fw-bold text_color me-4" href="{{ url_for('home.index') }}">タスクル</a>user:{{ g.user['username'] }}</div>
     {% else %}
-      <div class="navbar-brand"><a class="fs-1 text-decoration-none text-secondary" href="{{ url_for('home.index') }}">タスクル</a></div>
+      <div class="navbar-brand"><a class="fs-1 text-decoration-none fw-bold text_color me-4" href="{{ url_for('home.index') }}">タスクル</a>user:ログインしてください</div>
     {% endif %}
     <!-- 画面の大きさによる変化 -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+    <button class="navbar-toggler text_color" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="bi bi-justify" style="font-size: 2rem;"></i></span>
     </button>
 
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
         {% if g.user %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('home.index') }}">home</a>
+            <a class="nav-link text_color" href="{{ url_for('home.index') }}">グループ一覧</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('home.create') }}">make groupe</a>
+            <a class="nav-link text_color" href="{{ url_for('home.create') }}">グループ作成</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('home.join') }}">join groupe</a>
+            <a class="nav-link text_color" href="{{ url_for('home.join') }}">グループ参加</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('auth.logout') }}">logout</a>
+            <a class="nav-link text_color" href="{{ url_for('auth.logout') }}">ログアウト</a>
           </li>
         {% else %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('auth.login') }}">login</a>
+            <a class="nav-link text_color" href="{{ url_for('auth.login') }}">ログイン</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('auth.register') }}">register</a>
+            <a class="nav-link text_color" href="{{ url_for('auth.register') }}">サインイン</a>
           </li>
         {% endif %}
       </ul>

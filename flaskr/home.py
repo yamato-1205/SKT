@@ -93,10 +93,14 @@ def task(id):
     # if request.method == 'POST':
     db = get_db()
     tasks = db.execute(
-        'SELECT * FROM task WHERE groupe_id = ? ORDER BY state ASC',(id,)
+        'SELECT * FROM task WHERE groupe_id = ? ORDER BY state ASC', (id,)
     ).fetchall()
 
-    return render_template('home/task.html', id = id, tasks=tasks)
+    groupe = db.execute(
+        'SELECT * FROM groupe WHERE id = ?', (id,)
+    ).fetchone()
+
+    return render_template('home/task.html', id = id, tasks = tasks, groupe = groupe)
 
 # タスクを追加する
 @bp.route('/add/<int:id>', methods=('GET', 'POST'))

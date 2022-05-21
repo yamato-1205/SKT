@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}task{% endblock %}</h1>
+  <div class="d-flex justify-content-start align-items-center">
+    <h1>{% block title %}『{{ groupe['groupe_name'] }}』{% endblock %}</h1>
+    <h5>グループ招待コード：{{ groupe['groupe_code'] }}</h5>
+  </div>
 {% endblock %}
 
 
 {% block content %}
-    <div class="d-grid gap-2">
-        <a href="{{ url_for('home.add', id = id) }}"><button class="btn btn-primary" type="button" >タスクを追加する</button></a>
-    </div>
   {% for task in tasks %}
     {% if task.state == 0 %}
-      <div class="card text-white bg-primary my-2">
+      <div class="card card_text_color card_back_color my-3">
         <div class="card-header fs-3">
             {{ task['title'] }}
         </div>
@@ -21,7 +21,7 @@
           </blockquote>
           <p>実行前</p>
     {% elif task.state == 1 %}
-      <div class="card text-white bg-secondary my-2">
+      <div class="card  back_color text_color my-3">
         <div class="card-header fs-3">
             {{ task['title'] }}
         </div>
@@ -31,7 +31,7 @@
           </blockquote>
           <p>実行中（{{ task['username'] }}）</p>
     {% elif task.state == 2 %}
-      <div class="card text-white bg-success my-2">
+      <div class="card text_color bg-secondary my-3">
         <div class="card-header fs-3">
             {{ task['title'] }}
         </div>
@@ -42,7 +42,10 @@
           <p>完了（{{ task['username'] }}）</p>
     {% endif %}
         </div>
-        <a class="btn btn-info" href="{{ url_for('home.edit', id=task['id']) }}">修正</a>
+        <a class="btn accent_btn_color text_color" href="{{ url_for('home.edit', id=task['id']) }}">修正</a>
       </div>
   {% endfor %}
+  <div class="d-grid gap-2">
+    <a class="btn card_back_color" href="{{ url_for('home.add', id = id) }}">タスクを追加する</a>
+  </div>
 {% endblock %}
