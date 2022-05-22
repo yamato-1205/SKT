@@ -3,6 +3,18 @@ body {
     color: #d8dbd9;
 }
 
+A:hover {
+    color: black;
+}
+
+.name {
+    color: #d8dbd9;
+}
+
+.name:hover {
+    color: #d8dbd9;
+}
+
 .nav_head {
     background-color: #4f85a6;
     border-bottom: 10px solid #79a7d9;

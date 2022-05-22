@@ -9,6 +9,9 @@
 
 
 {% block content %}
+  <div class="d-grid gap-2 py-3">
+    <a class="btn btn-success" href="{{ url_for('home.add', id = id) }}">タスクを追加する</a>
+  </div>
   {% for task in tasks %}
     {% if task.state == 0 %}
       <div class="card card_text_color card_back_color my-3">
@@ -45,7 +48,4 @@
         <a class="btn accent_btn_color text_color" href="{{ url_for('home.edit', id=task['id']) }}">修正</a>
       </div>
   {% endfor %}
-  <div class="d-grid gap-2">
-    <a class="btn card_back_color" href="{{ url_for('home.add', id = id) }}">タスクを追加する</a>
-  </div>
 {% endblock %}

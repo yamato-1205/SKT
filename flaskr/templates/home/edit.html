@@ -7,49 +7,93 @@
 {% endblock %}
 
 {% block content %}
-  <form method="post" class="py-3">
+  <form method="post" class="py-3 col-6 mx-auto">
     <div class="row mb-3">
-      <label for="inputTask" class="col-sm-2 col-form-label"><i class="bi bi-list-task"></i> タスク名</label>
-      <div class="col-sm-10">
+      <label for="inputTask" class="col-form-label"><i class="bi bi-list-task"></i> タスク名</label>
+      <div>
         <input name="title" type="text" class="form-control" id="inputTask" value="{{ request.form['title'] or tasks['title'] }}" required>
       </div>
     </div>
     <div class="row mb-3">
-      <label for="inputMemo" class="col-sm-2 col-form-label"><i class="bi bi-card-text"></i> 備考欄</label>
-      <div class="col-sm-10">
+      <label for="inputMemo" class="col-form-label"><i class="bi bi-card-text"></i> 備考欄</label>
+      <div>
         <textarea name="body" class="form-control" id="inputMemo" rows="3" required>{{ request.form['body'] or tasks['body'] }}</textarea>
       </div>
     </div>
     <fieldset class="row mb-3">
-      <legend class="col-form-label col-sm-2 pt-0"><i class="bi bi-check-circle"></i> 進捗</legend>
-      <div class="col-sm-10">
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="state" id="gridRadios1" value="0" checked>
-          <label class="form-check-label" for="gridRadios1">
-            実行前
-          </label>
+      <legend class="col-form-label pt-0"><i class="bi bi-check-circle"></i> 進捗</legend>
+      {% if tasks['state'] == 1 %}
+        <div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="state" id="gridRadios1" value="0">
+            <label class="form-check-label" for="gridRadios1">
+              実行前
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="state" id="gridRadios2" value="1" checked>
+            <label class="form-check-label" for="gridRadios2">
+              実行中
+            </label>
+          </div>
+          <div class="form-check disabled">
+            <input class="form-check-input" type="radio" name="state" id="gridRadios3" value="2">
+            <label class="form-check-label" for="gridRadios3">
+              完了
+            </label>
+          </div>
         </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="state" id="gridRadios2" value="1">
-          <label class="form-check-label" for="gridRadios2">
-            実行中
-          </label>
+      {% elif tasks['state'] == 2 %}
+        <div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="state" id="gridRadios1" value="0">
+            <label class="form-check-label" for="gridRadios1">
+              実行前
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="state" id="gridRadios2" value="1">
+            <label class="form-check-label" for="gridRadios2">
+              実行中
+            </label>
+          </div>
+          <div class="form-check disabled">
+            <input class="form-check-input" type="radio" name="state" id="gridRadios3" value="2" checked>
+            <label class="form-check-label" for="gridRadios3">
+              完了
+            </label>
+          </div>
         </div>
-        <div class="form-check disabled">
-          <input class="form-check-input" type="radio" name="state" id="gridRadios3" value="2">
-          <label class="form-check-label" for="gridRadios3">
-            完了
-          </label>
+      {% else %}
+        <div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="state" id="gridRadios1" value="0" checked>
+            <label class="form-check-label" for="gridRadios1">
+              実行前
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="state" id="gridRadios2" value="1">
+            <label class="form-check-label" for="gridRadios2">
+              実行中
+            </label>
+          </div>
+          <div class="form-check disabled">
+            <input class="form-check-input" type="radio" name="state" id="gridRadios3" value="2">
+            <label class="form-check-label" for="gridRadios3">
+              完了
+            </label>
+          </div>
         </div>
-      </div>
+      {% endif %}
     </fieldset>
     <div class="d-grid gap-2">
-      <button type="submit" class="btn btn-primary">修正</button>
+      <button type="submit" class="btn accent_btn_color text_color">修正</button>
     </div>
   </form>
 
   <hr>
-  <form action="{{ url_for('home.delete', id=tasks['id']) }}" class="d-grid gap-2" method="post">
+  <form action="{{ url_for('home.delete', id=tasks['id']) }}" class="d-grid gap-2 col-6 mx-auto" method="post">
     <button class="btn btn-danger" type="submit">削除</button>
   </form>
 {% endblock %}

@@ -7,21 +7,21 @@
 {% endblock %}
 
 {% block content %}
-  <form method="post" class="py-3">
+  <form method="post" class="py-3 col-6 mx-auto">
     <div class="row mb-3">
-      <label for="inputTask" class="col-sm-2 col-form-label"><i class="bi bi-people-fill"></i> グループ名</label>
-      <div class="col-sm-10">
+      <label for="inputTask" class="col-form-label"><i class="bi bi-people-fill"></i> グループ名</label>
+      <div>
         <input name="groupe_name" type="text" class="form-control" id="inputTask" required>
       </div>
     </div>
     <div class="row mb-3">
-      <label for="inputMemo" class="col-sm-2 col-form-label"><i class="bi bi-card-text"></i> グループ詳細</label>
-      <div class="col-sm-10">
+      <label for="inputMemo" class="col-form-label"><i class="bi bi-card-text"></i> グループ詳細</label>
+      <div>
         <textarea name="groupe_explain" class="form-control" id="inputMemo" rows="3" required></textarea>
       </div>
     </div>
     <div class="d-grid gap-2">
-      <button type="submit" class="btn btn-primary">作成</button>
+      <button type="submit" class="btn accent_btn_color text_color">作成</button>
     </div>
   </form>
 {% endblock %}

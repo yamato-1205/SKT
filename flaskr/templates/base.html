@@ -10,9 +10,9 @@
 <nav class="nav_head navbar navbar-expand-lg px-3">
   <div class="container-fluid">
     {% if g.user %}
-      <div class="navbar-brand"><a class="fs-1 text-decoration-none fw-bold text_color me-4" href="{{ url_for('home.index') }}">タスクル</a>user:{{ g.user['username'] }}</div>
+      <div class="navbar-brand"><a class="fs-1 text-decoration-none fw-bold name me-4" href="{{ url_for('home.index') }}">タスクル</a>user:{{ g.user['username'] }}</div>
     {% else %}
-      <div class="navbar-brand"><a class="fs-1 text-decoration-none fw-bold text_color me-4" href="{{ url_for('home.index') }}">タスクル</a>user:ログインしてください</div>
+      <div class="navbar-brand"><a class="fs-1 text-decoration-none fw-bold name me-4" href="{{ url_for('home.index') }}">タスクル</a>user:ログインしてください</div>
     {% endif %}
     <!-- 画面の大きさによる変化 -->
     <button class="navbar-toggler text_color" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
