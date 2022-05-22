@@ -153,7 +153,19 @@ def edit(id):
             )
             db.commit()
 
-        return redirect(url_for('home.index'))
+        groupe_id = db.execute(
+            'SELECT groupe_id FROM task WHERE id = ?',(id,)
+        ).fetchone()
+
+        tasks = db.execute(
+            'SELECT * FROM task WHERE groupe_id = ? ORDER BY state ASC', (int(groupe_id[0]),)
+        ).fetchall()
+
+        groupe = db.execute(
+            'SELECT * FROM groupe WHERE id = ?', (int(groupe_id[0]),)
+        ).fetchone()
+
+        return render_template('home/task.html', id = int(groupe_id[0]), tasks = tasks, groupe = groupe)
     else:
         tasks = db.execute(
             'SELECT * FROM task WHERE id = ?',(id,)
