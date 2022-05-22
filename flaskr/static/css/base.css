@@ -48,3 +48,7 @@ A:hover {
 .content {
     padding: 20px;
 }
+
+p {
+    white-space: pre-wrap;
+}
